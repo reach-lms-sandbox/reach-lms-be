@@ -11,10 +11,10 @@ import java.util.Objects;
 public class ProgramTagsId
 		implements Serializable {
 
-	@Column(name = "programId")
+//	@Column(name = "programId")
 	private Long programId;
 
-	@Column(name = "tagId")
+//	@Column(name = "tagId")
 	private Long tagId;
 
 	public ProgramTagsId() {}

@@ -115,4 +115,9 @@ public class ModuleServiceImpl
 		moduleRepository.deleteById(moduleId);
 	}
 
+	@Override
+	public void deleteAll() {
+		moduleRepository.deleteAll();
+	}
+
 }

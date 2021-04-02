@@ -32,7 +32,7 @@ public class Course {
 	private String           courseDescription;
 	//
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "programid")
+	@JoinColumn(name = "programId")
 	@JsonIgnoreProperties(value = "courses")
 	private Program          program;
 	//
@@ -48,7 +48,7 @@ public class Course {
 	//
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumns({
-			@JoinColumn(name = "program_programid"), @JoinColumn(name = "tag_tagid")
+			@JoinColumn(name = "program_programId"), @JoinColumn(name = "tag_tagId")
 	})
 	@JsonIgnoreProperties(value = {"program"})
 	private ProgramTags      tag;
@@ -72,8 +72,8 @@ public class Course {
 		return courseId;
 	}
 
-	public void setCourseId(long courseid) {
-		this.courseId = courseid;
+	public void setCourseId(long courseId) {
+		this.courseId = courseId;
 	}
 
 
@@ -81,24 +81,24 @@ public class Course {
 		return courseName;
 	}
 
-	public void setCourseName(String coursename) {
-		this.courseName = coursename;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
 	public String getCourseCode() {
 		return courseCode;
 	}
 
-	public void setCourseCode(String coursecode) {
-		this.courseCode = coursecode;
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
 	}
 
 	public String getCourseDescription() {
 		return courseDescription;
 	}
 
-	public void setCourseDescription(String coursedescription) {
-		this.courseDescription = coursedescription;
+	public void setCourseDescription(String courseDescription) {
+		this.courseDescription = courseDescription;
 	}
 
 

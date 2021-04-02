@@ -20,17 +20,16 @@ public interface CourseRepository
 
 	List<Course> findByTag_tag_titleLikeIgnoreCase(String name);
 
-	@Query(value = "SELECT * FROM usercourses uc\n" + "JOIN courses c ON uc.courseid = c.courseid " +
-	               "WHERE userid = :userid", nativeQuery = true)
-	List<Course> findCoursesByUserid(long userid);
+	@Query(value = "SELECT * FROM user_courses uc\n" + "JOIN courses c ON uc.course_id = c.course_id " +
+	               "WHERE user_id = :userId", nativeQuery = true)
+	List<Course> findCoursesByUserId(long userId);
 
-	@Query(value = "SELECT * FROM courses where courseid not in (SELECT courseid FROM usercourses WHERE userid=:userid)",
-			nativeQuery = true)
-	List<Course> findAntiCoursesByUserId(long userid);
+	@Query(value = "SELECT * FROM courses where course_id not in (SELECT course_id FROM user_courses WHERE " +
+	               "user_id=:userId)", nativeQuery = true)
+	List<Course> findAntiCoursesByUserId(long userId);
 
 	/**
-	 * Compares the given {@link CourseRepository#search(String) query} against the
-	 * {@link Course#getCourseName() coursename},
+	 * Compares the given query against the {@link Course#getCourseName() coursename},
 	 * {@link Course#getCourseDescription() coursedescription}, and {@link Course#getCourseCode() coursecode}.
 	 * columns in the {@link Course courses} table.
 	 * <p>
@@ -45,15 +44,17 @@ public interface CourseRepository
 	 *
 	 * @return Any course that contains a match to the given search term
 	 */
-	@Query(value = "SELECT * FROM courses c WHERE CONCAT(c.coursename, ' ', c.coursedescription, ' ', c.coursecode) " +
-	               "ILIKE %:query%", nativeQuery = true)
+	@Query(
+			value = "SELECT * FROM courses c WHERE CONCAT(c.course_name, ' ', c.course_description, ' ', c.course_code) ILIKE :query",
+			nativeQuery = true)
 	List<Course> search(String query);
 
-	@Query(value = "WITH c as ( SELECT * FROM courses where courseid in (SELECT courseid FROM usercourses WHERE userid=:userid) )\n" +
-	               "\tSELECT * FROM c WHERE CONCAT(c.coursename, ' ', c.coursedescription, ' ', c.coursecode) ILIKE %:query%",
+	@Query(value = "WITH c as ( SELECT * FROM courses where course_id in (SELECT course_id FROM user_courses WHERE " +
+	               "user_id=:userId) ) " +
+	               "SELECT * FROM c WHERE CONCAT(c.course_name, ' ', c.course_description, ' ', c.course_code) ILIKE :query",
 			nativeQuery = true)
 	List<Course> search(
-			long userid,
+			long userId,
 			String query
 	);
 

@@ -66,6 +66,10 @@ public class SeedData
 	@Override
 	public void run(String[] args)
 	throws Exception {
+		courseService.deleteAll();
+		moduleService.deleteAll();
+		programService.deleteAll();
+		userService.deleteAll();
 		roleService.deleteAll();
 		Role adminRole   = new Role(RoleType.ADMIN.name(), RoleType.ADMIN);
 		Role teacherRole = new Role(RoleType.TEACHER.name(), RoleType.TEACHER);
@@ -137,7 +141,7 @@ public class SeedData
 				"\n" + "Remember that as you go through the program: if you have no idea how to solve a " +
 				"problem when you first look at it, that's by design. You're in good company. Start relentlessly attacking!";
 
-		String cs39_shorter = "Welcome to Computer Science! We're here to practice one skill: problem-solving";
+		String  cs39_shorter = "Welcome to Computer Science! We're here to practice one skill: problem-solving";
 		Program program_cs39 = new Program("CS39--Lambda Computer Science", "Computer Science", cs39_shorter);
 
 

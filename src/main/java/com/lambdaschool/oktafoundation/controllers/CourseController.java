@@ -118,7 +118,7 @@ public class CourseController {
 					long userId
 	) {
 		List<Course> enrolledCourses = new ArrayList<>();
-		courserepos.findCoursesByUserid(userId)
+		courserepos.findCoursesByUserId(userId)
 				.iterator()
 				.forEachRemaining(enrolledCourses::add);
 		List<Course> availableCourses = new ArrayList<>();
@@ -136,7 +136,7 @@ public class CourseController {
 			@PathVariable
 					long userId
 	) {
-		List<EntityModel<Course>> courses = courserepos.findCoursesByUserid(userId)
+		List<EntityModel<Course>> courses = courserepos.findCoursesByUserId(userId)
 				.stream()
 				.map(courseModelAssembler::toModel)
 				.collect(Collectors.toList());
@@ -153,7 +153,7 @@ public class CourseController {
 			@PathVariable
 					long userId
 	) {
-		List<EntityModel<Course>> courses = courserepos.findCoursesByUserid(userId)
+		List<EntityModel<Course>> courses = courserepos.findCoursesByUserId(userId)
 				.stream()
 				.map(courseModelAssembler::toModel)
 				.collect(Collectors.toList());

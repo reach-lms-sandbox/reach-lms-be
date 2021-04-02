@@ -180,4 +180,9 @@ public class ProgramServiceImpl
 		return programRepository.save(oldProgram);
 	}
 
+	@Override
+	public void deleteAll() {
+		programRepository.deleteAll();
+	}
+
 }

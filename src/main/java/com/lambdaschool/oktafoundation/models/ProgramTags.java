@@ -9,14 +9,14 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "programtags")
+@Table(name = "programTags")
 @JsonIgnoreProperties(value = {"id", "program"})
 public class ProgramTags
 		extends Auditable
 		implements Serializable {
 
 	@EmbeddedId
-	@Column(name = "program_tag_id")
+//	@Column(name = "program_tag_id")
 	private ProgramTagsId id;
 	//
 	@ManyToOne

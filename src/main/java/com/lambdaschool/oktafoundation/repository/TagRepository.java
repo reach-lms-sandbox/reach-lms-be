@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface TagRepository
 		extends CrudRepository<Tag, Long> {
 
-	List<Tag> findByPrograms_program_programId(long programid);
-	List<Tag> findByPrograms_program_programName(String programname);
+	List<Tag> findByPrograms_program_programId(long programId);
+	List<Tag> findByPrograms_program_programName(String programName);
 	Optional<Tag> findByTitle(String title);
 
 }

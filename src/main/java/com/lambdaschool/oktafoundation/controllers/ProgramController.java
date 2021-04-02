@@ -102,7 +102,7 @@ public class ProgramController {
 			@PathVariable
 					long userId
 	) {
-		List<EntityModel<Program>> programEntities = programRepos.findProgramsByUserid(userId)
+		List<EntityModel<Program>> programEntities = programRepos.findProgramsByUserId(userId)
 				.stream()
 				.map(programModelAssembler::toModel)
 				.collect(Collectors.toList());

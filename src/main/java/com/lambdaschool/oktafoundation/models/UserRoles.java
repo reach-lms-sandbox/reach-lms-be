@@ -10,10 +10,10 @@ import java.util.Objects;
 
 
 /**
- * The entity allowing interaction with the userroles table.
+ * The entity allowing interaction with the userRoles table.
  * The join table between users and roles.
  * <p>
- * Table enforces a unique constraint of the combination of userid and roleid.
+ * Table enforces a unique constraint of the combination of userid and roleId.
  * These two together form the primary key.
  * <p>
  * When you have a compound primary key, you must implement Serializable for Hibernate
@@ -27,7 +27,7 @@ public class UserRoles
 		implements Serializable {
 
 	/**
-	 * 1/2 of the primary key (long) for userroles.
+	 * 1/2 of the primary key (long) for userRoles.
 	 * Also is a foreign key into the users table
 	 */
 	@Id
@@ -38,7 +38,7 @@ public class UserRoles
 	private User user;
 
 	/**
-	 * 1/2 of the primary key (long) for userroles.
+	 * 1/2 of the primary key (long) for userRoles.
 	 * Also is a foreign key into the roles table
 	 */
 	@Id

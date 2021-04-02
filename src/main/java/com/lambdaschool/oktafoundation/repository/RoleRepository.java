@@ -34,7 +34,7 @@ public interface RoleRepository
 	@Modifying
 	@Query(
 			value = "UPDATE roles SET name = :name, last_modified_by = :uname, last_modified_date = CURRENT_TIMESTAMP WHERE" +
-			        " roleid = :roleId", nativeQuery = true)
+			        " role_id = :roleId", nativeQuery = true)
 	void updateRoleName(
 			String uname,
 			long roleId,

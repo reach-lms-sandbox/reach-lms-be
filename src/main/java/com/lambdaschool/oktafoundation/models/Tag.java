@@ -34,7 +34,7 @@ public class Tag
 	private              Set<ProgramTags> programs         = new HashSet<>();
 	//
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "courseid")
+//	@JoinColumn(name = "course_id")
 	@JsonIgnoreProperties(value = "tags")
 	private              Set<ProgramTags> courses          = new HashSet<>();
 

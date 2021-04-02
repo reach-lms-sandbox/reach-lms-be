@@ -29,7 +29,7 @@ public class Program
 	private String           programDescription;
 	//
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnoreProperties(value = "programs")
 	private User             user;
 	//

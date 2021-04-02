@@ -83,7 +83,7 @@ public class CourseServiceImpl
 
 	@Override
 	public List<Course> findByUser(long userId) {
-		return new ArrayList<>(courseRepository.findCoursesByUserid(userId));
+		return new ArrayList<>(courseRepository.findCoursesByUserId(userId));
 	}
 
 	@Override
@@ -198,6 +198,11 @@ public class CourseServiceImpl
 	throws CourseNotFoundException {
 		findCourseById(courseId); // throws if Course not found
 		courseRepository.deleteById(courseId);
+	}
+
+	@Override
+	public void deleteAll() {
+		courseRepository.deleteAll();
 	}
 
 }
