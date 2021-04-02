@@ -20,12 +20,12 @@ public class ProgramTags
 	private ProgramTagsId id;
 	//
 	@ManyToOne
-	@MapsId("programid")
+	@MapsId("programId")
 	@JsonIgnoreProperties(value = "tags", allowSetters = true)
 	private Program       program;
 	//
 	@ManyToOne
-	@MapsId("tagid")
+	@MapsId("tagId")
 	@JsonIgnoreProperties(value = "programs", allowSetters = true)
 	private Tag           tag;
 
@@ -35,7 +35,7 @@ public class ProgramTags
 			Program program,
 			Tag tag
 	) {
-		this.id      = new ProgramTagsId(program.getProgramid(), tag.getTagid());
+		this.id      = new ProgramTagsId(program.getProgramId(), tag.getTagId());
 		this.program = program;
 		this.tag     = tag;
 	}
@@ -89,7 +89,7 @@ public class ProgramTags
 
 	@Override
 	public String toString() {
-		return "ProgramTags{" + "id=" + id + ", program=" + program.getProgramid() + ", tag=" + tag + '}';
+		return "ProgramTags{" + "id=" + id + ", program=" + program.getProgramId() + ", tag=" + tag + '}';
 	}
 
 }

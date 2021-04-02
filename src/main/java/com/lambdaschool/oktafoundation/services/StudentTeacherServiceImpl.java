@@ -116,7 +116,7 @@ public class StudentTeacherServiceImpl
 			UserCourses newRelationship = new UserCourses(currUser, currCourse);
 			currCourse.getUsers()
 					.add(newRelationship);
-			courseService.update(currCourse.getCourseid(), currCourse);
+			courseService.update(currCourse.getCourseId(), currCourse);
 		}
 	}
 
@@ -138,10 +138,10 @@ public class StudentTeacherServiceImpl
 					.removeIf(userCourses -> userCourses.equals(new UserCourses(currUser, currCourse)));
 			if (!removed) {
 				throw new ResourceNotFoundException(
-						"The user with id " + currUser.getUserid() + " is not part" + " of the course with id + " +
-						currCourse.getCourseid());
+						"The user with id " + currUser.getUserId() + " is not part" + " of the course with id + " +
+						currCourse.getCourseId());
 			}
-			courseService.update(currCourse.getCourseid(), currCourse);
+			courseService.update(currCourse.getCourseId(), currCourse);
 
 		}
 	}
@@ -218,7 +218,7 @@ public class StudentTeacherServiceImpl
 						// that our User was previously enrolled in, we're going to have to
 						// remove this user from that course
 						if (!hashedIds.contains(userCourses.getCourse()
-								.getCourseid())) {
+								.getCourseId())) {
 							coursesToRemoveUser.add(userCourses);
 						}
 					});

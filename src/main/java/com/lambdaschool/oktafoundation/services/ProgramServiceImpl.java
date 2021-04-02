@@ -40,13 +40,13 @@ public class ProgramServiceImpl
 	)
 	throws ProgramNotFoundException, UserNotFoundException {
 		Program newProgram = new Program();
-		if (program.getProgramid() != 0) {
-			findProgramsById(program.getProgramid()); // throws if program not found
-			newProgram.setProgramid(program.getProgramid());
+		if (program.getProgramId() != 0) {
+			findProgramsById(program.getProgramId()); // throws if program not found
+			newProgram.setProgramId(program.getProgramId());
 		}
-		newProgram.setProgramname(program.getProgramname());
-		newProgram.setProgramtype(program.getProgramtype());
-		newProgram.setProgramdescription(program.getProgramdescription());
+		newProgram.setProgramName(program.getProgramName());
+		newProgram.setProgramType(program.getProgramType());
+		newProgram.setProgramDescription(program.getProgramDescription());
 		for (ProgramTags programTags : program.getTags()) {
 			newProgram.addTag(programTags.getTag());
 		}
@@ -54,9 +54,9 @@ public class ProgramServiceImpl
 				.clear();
 		for (Course course : program.getCourses()) {
 			newProgram.getCourses()
-					.add(new Course(course.getCoursename(),
-							course.getCoursedescription(),
-							course.getCoursedescription(),
+					.add(new Course(course.getCourseName(),
+							course.getCourseDescription(),
+							course.getCourseDescription(),
 							newProgram
 					));
 		}
@@ -112,7 +112,7 @@ public class ProgramServiceImpl
 	@Override
 	public Program findProgramsByName(String name)
 	throws ProgramNotFoundException {
-		return programRepository.findByProgramnameIgnoreCase(name)
+		return programRepository.findByProgramNameIgnoreCase(name)
 				.orElseThrow(() -> new ProgramNotFoundException(name));
 	}
 
@@ -131,8 +131,8 @@ public class ProgramServiceImpl
 		Program existingProgram = findProgramsById(programId);
 		for (Tag tag : programIn.getTags()) {
 			Optional<Tag> optional;
-			if (tag.getTagid() != 0) {
-				optional = tagService.find(tag.getTagid());
+			if (tag.getTagId() != 0) {
+				optional = tagService.find(tag.getTagId());
 			} else {
 				optional = tagService.find(tag.getTitle());
 			}
@@ -143,8 +143,8 @@ public class ProgramServiceImpl
 				if (tag.getTitle() != null) {
 					existingTag.setTitle(tag.getTitle());
 				}
-				if (tag.getHexcode() != null) {
-					existingTag.setHexcode(tag.getHexcode());
+				if (tag.getHexCode() != null) {
+					existingTag.setHexCode(tag.getHexCode());
 				}
 				if (!existingProgram.containsTag(existingTag)) {
 					existingProgram.addTag(existingTag);
@@ -162,14 +162,14 @@ public class ProgramServiceImpl
 	)
 	throws ProgramNotFoundException {
 		Program oldProgram = findProgramsById(id); // throws if not found
-		if (program.getProgramname() != null) {
-			oldProgram.setProgramname(program.getProgramname());
+		if (program.getProgramName() != null) {
+			oldProgram.setProgramName(program.getProgramName());
 		}
-		if (program.getProgramtype() != null) {
-			oldProgram.setProgramtype(program.getProgramtype());
+		if (program.getProgramType() != null) {
+			oldProgram.setProgramType(program.getProgramType());
 		}
-		if (program.getProgramdescription() != null) {
-			oldProgram.setProgramdescription(program.getProgramdescription());
+		if (program.getProgramDescription() != null) {
+			oldProgram.setProgramDescription(program.getProgramDescription());
 		}
 		if (program.getTags()
 				    .size() > 0) {

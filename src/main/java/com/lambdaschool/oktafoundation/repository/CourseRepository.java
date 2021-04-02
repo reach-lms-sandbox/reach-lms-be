@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface CourseRepository
 		extends CrudRepository<Course, Long> {
 
-	Optional<Course> findByCoursename(String coursename);
+	Optional<Course> findByCourseName(String coursename);
 
-	List<Course> findCoursesByProgram_Programid(long programid);
+	List<Course> findCoursesByProgram_ProgramId(long programid);
 
 	List<Course> findByTag_tag_titleLikeIgnoreCase(String name);
 
@@ -30,8 +30,8 @@ public interface CourseRepository
 
 	/**
 	 * Compares the given {@link CourseRepository#search(String) query} against the
-	 * {@link Course#getCoursename() coursename},
-	 * {@link Course#getCoursedescription() coursedescription}, and {@link Course#getCoursecode() coursecode}.
+	 * {@link Course#getCourseName() coursename},
+	 * {@link Course#getCourseDescription() coursedescription}, and {@link Course#getCourseCode() coursecode}.
 	 * columns in the {@link Course courses} table.
 	 * <p>
 	 * Case (upper vs lower) will be ignored. If any column contains subtext that matches the query, that course
@@ -46,7 +46,7 @@ public interface CourseRepository
 	 * @return Any course that contains a match to the given search term
 	 */
 	@Query(value = "SELECT * FROM courses c WHERE CONCAT(c.coursename, ' ', c.coursedescription, ' ', c.coursecode) " +
-	               "ILIKE %?1%", nativeQuery = true)
+	               "ILIKE %:query%", nativeQuery = true)
 	List<Course> search(String query);
 
 	@Query(value = "WITH c as ( SELECT * FROM courses where courseid in (SELECT courseid FROM usercourses WHERE userid=:userid) )\n" +

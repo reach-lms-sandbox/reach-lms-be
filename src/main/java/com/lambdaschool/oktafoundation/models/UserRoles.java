@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -19,7 +20,7 @@ import java.io.Serializable;
  * When you implement Serializable you must implement equals and hash code
  */
 @Entity
-@Table(name = "userroles")
+@Table(name = "userRoles")
 @IdClass(UserRolesId.class)
 public class UserRoles
 		extends Auditable
@@ -32,7 +33,7 @@ public class UserRoles
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
 	@NotNull
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "userId")
 	@JsonIgnoreProperties(value = "roles", allowSetters = true)
 	private User user;
 
@@ -43,7 +44,7 @@ public class UserRoles
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER)
 	@NotNull
-	@JoinColumn(name = "roleid")
+	@JoinColumn(name = "roleId")
 	@JsonIgnoreProperties(value = "users", allowSetters = true)
 	private Role role;
 
@@ -105,7 +106,7 @@ public class UserRoles
 
 	@Override
 	public int hashCode() {
-		return 37;
+		return Objects.hash(getUser(), getRole());
 	}
 
 	@Override
@@ -117,8 +118,8 @@ public class UserRoles
 			return false;
 		}
 		UserRoles that = (UserRoles) o;
-		return ((user == null) ? 0 : user.getUserid()) == ((that.user == null) ? 0 : that.user.getUserid()) &&
-		       ((role == null) ? 0 : role.getRoleid()) == ((that.role == null) ? 0 : that.role.getRoleid());
+		return ((user == null) ? 0 : user.getUserId()) == ((that.user == null) ? 0 : that.user.getUserId()) &&
+		       ((role == null) ? 0 : role.getRoleId()) == ((that.role == null) ? 0 : that.role.getRoleId());
 	}
 
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface ProgramRepository
 		extends CrudRepository<Program, Long> {
 
-	Optional<Program> findByProgramnameIgnoreCase(String name);
+	Optional<Program> findByProgramNameIgnoreCase(String name);
 
 	List<Program> findByTags_tag_titleIgnoreCase(String name);
 
