@@ -25,7 +25,7 @@ public class ProgramServiceImpl
 	ProgramRepository programRepository;
 
 	@Autowired
-	UserRepository userrepos;
+	UserRepository userRepository;
 
 	@Autowired
 	TagRepository tagRepository;
@@ -35,7 +35,7 @@ public class ProgramServiceImpl
 
 	@Override
 	public Program save(
-			long userid,
+			long userId,
 			Program program
 	)
 	throws ProgramNotFoundException, UserNotFoundException {
@@ -60,15 +60,15 @@ public class ProgramServiceImpl
 							newProgram
 					));
 		}
-		User currentUser = userrepos.findById(userid)
-				.orElseThrow(() -> new UserNotFoundException(userid));
+		User currentUser = userRepository.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException(userId));
 		newProgram.setUser(currentUser);
 		return programRepository.save(newProgram);
 	}
 
 	@Override
 	public Program save(
-			long userid,
+			long userId,
 			ProgramIn programIn
 	)
 	throws ProgramNotFoundException, UserNotFoundException {
@@ -81,7 +81,7 @@ public class ProgramServiceImpl
 				newProgram.addTag(optional.get());
 			}
 		}
-		return save(userid, newProgram);
+		return save(userId, newProgram);
 	}
 
 	@Override
@@ -103,10 +103,10 @@ public class ProgramServiceImpl
 	}
 
 	@Override
-	public Program findProgramsById(long id)
+	public Program findProgramsById(long programId)
 	throws ProgramNotFoundException {
-		return programRepository.findById(id)
-				.orElseThrow(() -> new ProgramNotFoundException(id));
+		return programRepository.findById(programId)
+				.orElseThrow(() -> new ProgramNotFoundException(programId));
 	}
 
 	@Override
@@ -117,10 +117,10 @@ public class ProgramServiceImpl
 	}
 
 	@Override
-	public void delete(long id)
+	public void delete(long programId)
 	throws ProgramNotFoundException {
-		findProgramsById(id); // throws if not found
-		programRepository.deleteById(id);
+		findProgramsById(programId); // throws if not found
+		programRepository.deleteById(programId);
 	}
 
 	@Override
@@ -158,10 +158,10 @@ public class ProgramServiceImpl
 	@Override
 	public Program update(
 			Program program,
-			long id
+			long programId
 	)
 	throws ProgramNotFoundException {
-		Program oldProgram = findProgramsById(id); // throws if not found
+		Program oldProgram = findProgramsById(programId); // throws if not found
 		if (program.getProgramName() != null) {
 			oldProgram.setProgramName(program.getProgramName());
 		}

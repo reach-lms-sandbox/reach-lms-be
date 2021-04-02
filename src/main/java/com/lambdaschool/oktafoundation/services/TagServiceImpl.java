@@ -36,9 +36,9 @@ public class TagServiceImpl
 	}
 
 	@Override
-	public Tag get(long tagid)
+	public Tag get(long tagId)
 	throws TagNotFoundException {
-		return find(tagid).orElseThrow(() -> new TagNotFoundException(tagid));
+		return find(tagId).orElseThrow(() -> new TagNotFoundException(tagId));
 	}
 
 	@Override
@@ -58,18 +58,18 @@ public class TagServiceImpl
 	}
 
 	@Override
-	public List<Tag> getByProgram(long programid) {
+	public List<Tag> getByProgram(long programId) {
 		List<Tag> tags = new ArrayList<>();
-		tagRepository.findByPrograms_program_programId(programid)
+		tagRepository.findByPrograms_program_programId(programId)
 				.iterator()
 				.forEachRemaining(tags::add);
 		return tags;
 	}
 
 	@Override
-	public List<Tag> getByProgram(String programname) {
+	public List<Tag> getByProgram(String programName) {
 		List<Tag> tags = new ArrayList<>();
-		tagRepository.findByPrograms_program_programName(programname)
+		tagRepository.findByPrograms_program_programName(programName)
 				.iterator()
 				.forEachRemaining(tags::add);
 		return tags;
@@ -77,11 +77,11 @@ public class TagServiceImpl
 
 	@Override
 	public Tag save(
-			long programid,
+			long programId,
 			Tag tag
 	)
 	throws TagNotFoundException, TagFoundException, ProgramNotFoundException {
-		Program program = programService.findProgramsById(programid); // throws if program does not exist
+		Program program = programService.findProgramsById(programId); // throws if program does not exist
 		Tag     newTag  = new Tag();
 		if (tag.getTagId() != 0) { // if this tag has an id
 			newTag = get(tag.getTagId()); // reassign if it exists, throw if not
@@ -105,10 +105,10 @@ public class TagServiceImpl
 	@Override
 	public Tag save(
 			Tag tag,
-			long programid
+			long programId
 	)
 	throws TagNotFoundException, TagFoundException, ProgramNotFoundException {
-		return save(programid, tag);
+		return save(programId, tag);
 	}
 
 	// OVERLOAD for convenience
@@ -119,10 +119,10 @@ public class TagServiceImpl
 
 	@Override
 	public Tag replace(
-			long tagid,
+			long tagId,
 			Tag tag
 	) {
-		Tag oldTag = get(tagid); // throws if no such tag exists
+		Tag oldTag = get(tagId); // throws if no such tag exists
 		if (tag.getHexCode() != null) {
 			oldTag.setHexCode(tag.getHexCode());
 		}
@@ -136,9 +136,9 @@ public class TagServiceImpl
 	@Override
 	public Tag replace(
 			Tag tag,
-			long tagid
+			long tagId
 	) {
-		return save(tagid, tag);
+		return save(tagId, tag);
 	}
 
 	// OVERLOAD for convenience
@@ -151,17 +151,17 @@ public class TagServiceImpl
 	@Override
 	public Tag update(
 			Tag tag,
-			long tagid
+			long tagId
 	) {
-		return update(tagid, tag);
+		return update(tagId, tag);
 	}
 
 	@Override
 	public Tag update(
-			long tagid,
+			long tagId,
 			Tag tag
 	) {
-		Tag oldTag = get(tagid); // throws if no such tag
+		Tag oldTag = get(tagId); // throws if no such tag
 		if (tag.getTitle() != null) {
 			oldTag.setTitle(tag.getTitle());
 		}
@@ -192,8 +192,8 @@ public class TagServiceImpl
 	}
 
 	@Override
-	public void delete(long tagid) {
-		Tag toDelete = get(tagid); // throws if no such tag
+	public void delete(long tagId) {
+		Tag toDelete = get(tagId); // throws if no such tag
 		tagRepository.delete(toDelete);
 	}
 

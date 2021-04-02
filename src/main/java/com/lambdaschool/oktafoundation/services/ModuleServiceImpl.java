@@ -56,10 +56,10 @@ public class ModuleServiceImpl
 
 	@Override
 	public void replaceMarkdown(
-			Long moduleid,
+			Long moduleId,
 			String markdown
 	) {
-		Module module = find(moduleid); // throws if no such module
+		Module module = find(moduleId); // throws if no such module
 		module.setModuleContent(markdown);
 		moduleRepository.save(module);
 	}
@@ -88,10 +88,11 @@ public class ModuleServiceImpl
 
 	@Override
 	public Module update(
-			long id,
+			long moduleId,
 			Module module
-	) throws ModuleNotFoundException {
-		Module newModule = find(id); // throws if no such module
+	)
+	throws ModuleNotFoundException {
+		Module newModule = find(moduleId); // throws if no such module
 
 		if (module.getModuleName() != null) {
 			newModule.setModuleName(module.getModuleName());
@@ -108,10 +109,10 @@ public class ModuleServiceImpl
 	}
 
 	@Override
-	public void delete(long id)
+	public void delete(long moduleId)
 	throws ModuleNotFoundException {
-		find(id); // throws if no such module
-		moduleRepository.deleteById(id);
+		find(moduleId); // throws if no such module
+		moduleRepository.deleteById(moduleId);
 	}
 
 }

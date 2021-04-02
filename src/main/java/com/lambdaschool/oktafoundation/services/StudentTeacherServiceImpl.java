@@ -76,19 +76,19 @@ public class StudentTeacherServiceImpl
 	}
 
 	@Override
-	public List<User> getCourseAttachedUsers(Long courseid) {
+	public List<User> getCourseAttachedUsers(Long courseId) {
 		List<User> users = new ArrayList<>();
-		userRepository.findEnrolledUsers(courseid)
+		userRepository.findEnrolledUsers(courseId)
 				.iterator()
 				.forEachRemaining(users::add);
 		return users;
 	}
 
 	@Override
-	public List<User> getCourseNotAttachedUsers(Long courseid) {
+	public List<User> getCourseNotAttachedUsers(Long courseId) {
 		List<User> users = new ArrayList<>();
 		// find any users who are not in Course.users -- this will initially include ADMIN users
-		userRepository.findNotEnrolledUsers(courseid)
+		userRepository.findNotEnrolledUsers(courseId)
 				.iterator()
 				.forEachRemaining(user -> {
 					// we only want users to appear here if they are NOT ADMIN users
@@ -101,15 +101,15 @@ public class StudentTeacherServiceImpl
 
 	@Override
 	public void attachUserToCourse(
-			Long userid,
-			Long courseid
+			Long userId,
+			Long courseId
 	) {
 		RoleType callingUserRole = helperFunctions.getCurrentPriorityRole();
 		if (callingUserRole == RoleType.STUDENT) {
 			throw new RoleNotSufficientException("Students are not allowed to attach users to courses");
 		}
-		User   currUser   = userService.findUserById(userid);
-		Course currCourse = courseService.findCourseById(courseid);
+		User   currUser   = userService.findUserById(userId);
+		Course currCourse = courseService.findCourseById(courseId);
 		if (currUser.getRole() == RoleType.ADMIN) {
 			throw new RoleNotSufficientException("ADMIN users are not attached at the course level");
 		} else {
@@ -122,15 +122,15 @@ public class StudentTeacherServiceImpl
 
 	@Override
 	public void detachUserFromCourse(
-			Long userid,
-			Long courseid
+			Long userId,
+			Long courseId
 	) {
 		RoleType callingUserRole = helperFunctions.getCurrentPriorityRole();
 		if (callingUserRole == RoleType.STUDENT) {
 			throw new RoleNotSufficientException("Students are not allowed to detach users to courses");
 		}
-		User   currUser   = userService.findUserById(userid);
-		Course currCourse = courseService.findCourseById(courseid);
+		User   currUser   = userService.findUserById(userId);
+		Course currCourse = courseService.findCourseById(courseId);
 		if (currUser.getRole() == RoleType.ADMIN) {
 			throw new RoleNotSufficientException("ADMIN users are not attached at the course level");
 		} else {
@@ -147,9 +147,9 @@ public class StudentTeacherServiceImpl
 	}
 
 	@Override
-	public List<User> getCourseAttachedStudents(Long courseid) {
+	public List<User> getCourseAttachedStudents(Long courseId) {
 		List<User> students = new ArrayList<>();
-		userRepository.findEnrolledUsers(courseid)
+		userRepository.findEnrolledUsers(courseId)
 				.iterator()
 				.forEachRemaining(user -> {
 					if (user.getRole() == RoleType.STUDENT) {
@@ -160,9 +160,9 @@ public class StudentTeacherServiceImpl
 	}
 
 	@Override
-	public List<User> getCourseAttachedTeachers(Long courseid) {
+	public List<User> getCourseAttachedTeachers(Long courseId) {
 		List<User> teachers = new ArrayList<>();
-		userRepository.findEnrolledUsers(courseid)
+		userRepository.findEnrolledUsers(courseId)
 				.iterator()
 				.forEachRemaining(user -> {
 					if (user.getRole() == RoleType.TEACHER) {
@@ -173,9 +173,9 @@ public class StudentTeacherServiceImpl
 	}
 
 	@Override
-	public List<User> getCourseDetachedStudents(Long courseid) {
+	public List<User> getCourseDetachedStudents(Long courseId) {
 		List<User> students = new ArrayList<>();
-		userRepository.findNotEnrolledUsers(courseid)
+		userRepository.findNotEnrolledUsers(courseId)
 				.iterator()
 				.forEachRemaining(user -> {
 					if (user.getRole() == RoleType.STUDENT) {
@@ -186,9 +186,9 @@ public class StudentTeacherServiceImpl
 	}
 
 	@Override
-	public List<User> getCourseDetachedTeachers(Long courseid) {
+	public List<User> getCourseDetachedTeachers(Long courseId) {
 		List<User> detachedTeachers = new ArrayList<>();
-		userRepository.findNotEnrolledUsers(courseid)
+		userRepository.findNotEnrolledUsers(courseId)
 				.iterator()
 				.forEachRemaining(user -> {
 					if (user.getRole() == RoleType.TEACHER) {
@@ -201,15 +201,15 @@ public class StudentTeacherServiceImpl
 	@Transactional
 	@Override
 	public User replaceUserEnrollments(
-			Long userid,
-			List<Long> courseids
+			Long userId,
+			List<Long> courseIds
 	) {
-		User userToUpdate = userService.findUserById(userid);
+		User userToUpdate = userService.findUserById(userId);
 		if (userToUpdate.getRole() == RoleType.ADMIN) {
 			throw new RoleNotSufficientException("ADMIN users are not attached at the course-level");
 		} else {
 			// create a hashset from the list passed in (to get only unique ids)
-			Set<Long>        hashedIds           = new HashSet<>(courseids);
+			Set<Long> hashedIds = new HashSet<>(courseIds);
 			// this hashset will contain any course that needs to un-enroll the user in question
 			Set<UserCourses> coursesToRemoveUser = new HashSet<>();
 			userToUpdate.getCourses()
@@ -230,8 +230,8 @@ public class StudentTeacherServiceImpl
 
 			// now, for every course in our hashed ids, we will make a "new"
 			// UserCourses instance and add it to our user's courses!
-			for (Long courseid : hashedIds) {
-				Course      course          = courseService.findCourseById(courseid);
+			for (Long courseId : hashedIds) {
+				Course      course          = courseService.findCourseById(courseId);
 				UserCourses newRelationship = new UserCourses();
 				newRelationship.setUser(userToUpdate);
 				newRelationship.setCourse(course);

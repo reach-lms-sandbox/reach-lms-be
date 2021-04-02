@@ -54,9 +54,9 @@ public class RoleServiceImpl
 	}
 
 	@Override
-	public Role findRoleById(long id) {
-		return roleRepo.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
+	public Role findRoleById(long roleId) {
+		return roleRepo.findById(roleId)
+				.orElseThrow(() -> new ResourceNotFoundException("Role id " + roleId + " not found!"));
 	}
 
 	@Transactional
@@ -90,7 +90,7 @@ public class RoleServiceImpl
 	@Transactional
 	@Override
 	public Role update(
-			long id,
+			long roleId,
 			Role role
 	) {
 		if (role.getName() == null) {
@@ -103,11 +103,11 @@ public class RoleServiceImpl
 					"User Roles are not updated through Role. See endpoint POST: users/user/{userid}/role/{roleid}");
 		}
 
-		Role newRole = findRoleById(id); // see if id exists
+		Role newRole = findRoleById(roleId); // see if roleId exists
 
 		roleRepo.updateRoleName(userAuditing.getCurrentAuditor()
-				.get(), id, role.getName());
-		return findRoleById(id);
+				.get(), roleId, role.getName());
+		return findRoleById(roleId);
 	}
 
 }
